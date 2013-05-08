@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+	<mvc:resources mapping="/resources/**"  location="/resources/" />
+
+	<!-- Scans within the base package of the application for @Components to 
+		configure as beans -->
+	<!-- @Controller, @Service, @Configuration, etc. -->
+	<context:component-scan base-package="com.charts" />
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven />
+
+	<bean id="persistenceFactory"
+		class="org.firebrandocm.dao.impl.hector.HectorPersistenceFactory"
+		init-method="init" destroy-method="destroy">
+		<property name="defaultConsistencyLevel" value="ANY" />
+		<property name="clusterName" value="Main22" />
+		<property name="defaultKeySpace" value="QUIDQUID" />
+		<property name="contactNodes" value="localhost" />
+		<property name="thriftPort" value="9160" />
+		<property name="autoDiscoverHosts" value="true" />
+		<property name="entitiesPkg" value="com.charts.web.model.entities" />
+	</bean>
+
+
+</beans>
